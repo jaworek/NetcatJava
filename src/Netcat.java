@@ -15,281 +15,6 @@ public class Netcat extends NetcatGUI
         super(title);
     }
 
-    class TcpServer
-    {
-        ServerSocket serverSocket;
-        Socket socket;
-        PrintWriter out;
-        BufferedReader in;
-        ButtonHandler txButtonHandler;
-
-        TcpServer(String port) throws IOException
-        {
-            serverSocket = new ServerSocket(Integer.parseInt(port));
-            socket = serverSocket.accept();
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            txButtonHandler = new ButtonHandler();
-            sendButton.addActionListener(txButtonHandler);
-
-            rx();
-
-            socket.close();
-            serverSocket.close();
-
-            System.exit(1);
-        }
-
-        void tx() throws IOException
-        {
-            out.println(txArea.getText());
-            rxArea.setText(rxArea.getText() + "Me: " + txArea.getText() + System.lineSeparator());
-            txArea.setText("");
-        }
-
-        private class ButtonHandler implements ActionListener
-        {
-            public void actionPerformed(ActionEvent event)                         //throws IOException
-            {
-                try
-                {
-                    tx();
-                } catch (IOException e)
-                {
-                }
-            }
-        }
-
-        void rx() throws IOException
-        {
-            String recievedMessage;
-            while ((recievedMessage = in.readLine()) != null)
-            {
-                String existingText = rxArea.getText();
-                rxArea.setText(existingText + "Client: " + recievedMessage + System.lineSeparator());
-            }
-        }
-    }
-
-    class TcpClient
-    {
-        Socket socket;
-        PrintWriter out;
-        BufferedReader in;
-        ButtonHandler txButtonHandler;
-
-        TcpClient(String remoteAddr, String remotePort) throws IOException
-        {
-            socket = new Socket(remoteAddr, Integer.parseInt(remotePort));
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            txButtonHandler = new ButtonHandler();
-            sendButton.addActionListener(txButtonHandler);
-
-            rx();
-
-            socket.close();
-
-            System.exit(1);
-        }
-
-        void tx() throws IOException
-        {
-            out.println(txArea.getText());
-            rxArea.setText(rxArea.getText() + "Me: " + txArea.getText() + System.lineSeparator());
-            txArea.setText("");
-        }
-
-        private class ButtonHandler implements ActionListener
-        {
-            public void actionPerformed(ActionEvent event)                         //throws IOException
-            {
-                try
-                {
-                    tx();
-                } catch (IOException e)
-                {
-                }
-            }
-        }
-
-        void rx() throws IOException
-        {
-            String recievedMessage;
-            while ((recievedMessage = in.readLine()) != null)
-            {
-                String existingText = rxArea.getText();
-                rxArea.setText(existingText + "Client: " + recievedMessage + System.lineSeparator());
-            }
-        }
-    }
-
-    class UdpServer
-    {
-        DatagramSocket socket;
-        InetAddress ip = null;
-        int port;
-        ButtonHandler txButtonHandler;
-        String fromServer = "";
-
-        UdpServer(String localPort) throws IOException
-        {
-            socket = new DatagramSocket(Integer.parseInt(localPort));
-
-            txButtonHandler = new ButtonHandler();
-            sendButton.addActionListener(txButtonHandler);
-
-            rx();
-
-            System.exit(1);
-        }
-
-        void tx() throws IOException
-        {
-            byte[] buf;
-
-            String toServer;
-
-            toServer = txArea.getText();
-
-            buf = toServer.getBytes();
-
-            DatagramPacket packet = new DatagramPacket(buf, toServer.length(), ip, port);
-
-            if (ip != null) socket.send(packet);
-
-            fromServer += "Me: " + txArea.getText() + System.lineSeparator();
-            rxArea.setText(fromServer);
-
-            txArea.setText("");
-        }
-
-        private class ButtonHandler implements ActionListener
-        {
-            public void actionPerformed(ActionEvent event)                         //throws IOException
-            {
-                try
-                {
-                    tx();
-                } catch (IOException e)
-                {
-                }
-            }
-        }
-
-        void rx() throws IOException
-        {
-            byte[] buf = new byte[256];
-
-            do
-            {
-                for (int i = 0; i < 256; i++) buf[i] = 0;
-
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
-
-                socket.receive(packet);
-
-                fromServer += "Client: " + new String(packet.getData()) + System.lineSeparator();
-
-                ip = packet.getAddress();
-
-                port = packet.getPort();
-
-                if (fromServer != null)
-                    rxArea.setText(fromServer);
-            }
-            while (fromServer != null);
-
-            socket.close();
-            System.exit(1);
-        }
-    }
-
-    class UdpClient
-    {
-        DatagramSocket socket;
-        InetAddress ip;
-        int port;
-        ButtonHandler txButtonHandler;
-        String fromServer = "";
-
-        UdpClient(String remoteAddr, String remotePort) throws IOException
-        {
-            socket = new DatagramSocket();
-            port = Integer.parseInt(remotePort);
-            ip = InetAddress.getByName(remoteAddr);
-
-            txButtonHandler = new ButtonHandler();
-            sendButton.addActionListener(txButtonHandler);
-
-            rx();
-
-            System.exit(1);
-        }
-
-        void tx() throws IOException
-        {
-            byte[] buf;
-
-            String toServer;
-
-            toServer = txArea.getText();
-
-            buf = toServer.getBytes();
-
-            DatagramPacket packet = new DatagramPacket(buf, toServer.length(), ip, port);
-
-            if (ip != null) socket.send(packet);
-
-            fromServer += "Me: " + txArea.getText() + System.lineSeparator();
-            rxArea.setText(fromServer);
-
-            txArea.setText("");
-        }
-
-        private class ButtonHandler implements ActionListener
-        {
-            public void actionPerformed(ActionEvent event)                     //throws IOException
-            {
-                try
-                {
-                    tx();
-                } catch (IOException e)
-                {
-                }
-            }
-        }
-
-        void rx() throws IOException
-        {
-            byte[] buf = new byte[256];
-
-            do
-            {
-                for (int i = 0; i < 256; i++) buf[i] = 0;
-
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
-
-                socket.receive(packet);
-
-                fromServer += "Client: " + new String(packet.getData()) + System.lineSeparator();
-
-                ip = packet.getAddress();
-
-                port = packet.getPort();
-
-                if (fromServer != null)
-                    rxArea.setText(fromServer);
-            }
-            while (fromServer != null);
-
-            socket.close();
-            System.exit(1);
-        }
-    }
-
     public void run() throws IOException
     {
         if (role.equals("TCP Server"))
@@ -340,5 +65,106 @@ public class Netcat extends NetcatGUI
         f.setResizable(false);
         f.setVisible(true);
         f.run();
+    }
+}
+
+class Udp
+{
+    DatagramSocket socket;
+    InetAddress ip = null;
+    int port;
+    ButtonHandler txButtonHandler;
+    String fromServer = "";
+    JButton sendButton = Netcat.sendButton;
+    JTextArea rxArea = Netcat.rxArea;
+    JTextField txArea = Netcat.txArea;
+
+    Udp()
+    {
+        txButtonHandler = new ButtonHandler();
+        sendButton.addActionListener(txButtonHandler);
+    }
+
+    void tx() throws IOException
+    {
+        byte[] buf;
+
+        String toServer;
+
+        toServer = txArea.getText();
+
+        buf = toServer.getBytes();
+
+        DatagramPacket packet = new DatagramPacket(buf, toServer.length(), ip, port);
+
+        if (ip != null) socket.send(packet);
+
+        fromServer += "Me: " + txArea.getText() + System.lineSeparator();
+        rxArea.setText(fromServer);
+
+        txArea.setText("");
+    }
+
+    class ButtonHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent event)                         //throws IOException
+        {
+            try
+            {
+                tx();
+            } catch (IOException e)
+            {
+            }
+        }
+    }
+
+    void rx() throws IOException
+    {
+        byte[] buf = new byte[256];
+
+        do
+        {
+            for (int i = 0; i < 256; i++) buf[i] = 0;
+
+            DatagramPacket packet = new DatagramPacket(buf, buf.length);
+
+            socket.receive(packet);
+
+            fromServer += "Client: " + new String(packet.getData()) + System.lineSeparator();
+
+            ip = packet.getAddress();
+
+            port = packet.getPort();
+
+            rxArea.setText(fromServer);
+        }
+        while (fromServer != null);
+
+        socket.close();
+        System.exit(1);
+    }
+}
+
+class UdpServer extends Udp
+{
+    UdpServer(String localPort) throws IOException
+    {
+        super();
+        socket = new DatagramSocket(Integer.parseInt(localPort));
+
+        rx();
+    }
+}
+
+class UdpClient extends Udp
+{
+    UdpClient(String remoteAddr, String remotePort) throws IOException
+    {
+        super();
+        socket = new DatagramSocket();
+        port = Integer.parseInt(remotePort);
+        ip = InetAddress.getByName(remoteAddr);
+
+        rx();
     }
 }

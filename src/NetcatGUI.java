@@ -3,9 +3,9 @@ import javax.swing.*;
 
 class NetcatGUI extends JFrame
 {
-    public JButton sendButton;
-    public JTextArea rxArea;
-    public JTextField txArea;
+    public static JButton sendButton;
+    public static JTextArea rxArea;
+    public static JTextField txArea;
     public JScrollPane pane;
     public Container container;
 
