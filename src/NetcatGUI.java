@@ -6,19 +6,17 @@ class NetcatGUI extends JFrame
     public static JButton sendButton;
     public static JTextArea rxArea;
     public static JTextField txArea;
-    public JScrollPane pane;
-    public Container container;
 
-    public NetcatGUI(String title)
+    NetcatGUI(String title)
     {
         super(title);
 
-        container = getContentPane();
+        Container container = getContentPane();
         container.setLayout(new FlowLayout());
 
         rxArea = new JTextArea(6, 43);
         rxArea.setEditable(false);
-        pane = new JScrollPane(rxArea);
+        JScrollPane pane = new JScrollPane(rxArea);
 
         txArea = new JTextField(43);
 

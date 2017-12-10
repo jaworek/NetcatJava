@@ -11,10 +11,10 @@ class Tcp
     BufferedReader in;
     ButtonHandler txButtonHandler;
     JButton sendButton = Netcat.sendButton;
-    JTextArea rxArea = Netcat.rxArea;
-    JTextField txArea = Netcat.txArea;
+    private JTextArea rxArea = Netcat.rxArea;
+    private JTextField txArea = Netcat.txArea;
 
-    void tx() throws IOException
+    private void tx() throws IOException
     {
         out.println(txArea.getText());
         rxArea.setText(rxArea.getText() + "Me: " + txArea.getText() + System.lineSeparator());

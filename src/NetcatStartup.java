@@ -3,13 +3,12 @@ import java.awt.event.ActionListener;
 
 class NetcatStartup extends NetcatStartupGUI
 {
-    public ButtonHandler bHandler;
-    volatile boolean finished = false;
+    private volatile boolean finished = false;
 
-    public NetcatStartup(String title)
+    NetcatStartup(String title)
     {
         super(title);
-        bHandler = new ButtonHandler();
+        ButtonHandler bHandler = new ButtonHandler();
         startButton.addActionListener(bHandler);
     }
 
@@ -25,9 +24,8 @@ class NetcatStartup extends NetcatStartupGUI
         }
     }
 
-    public boolean run()
+    public void run()
     {
         while (!finished) ;
-        return true;
     }
 }

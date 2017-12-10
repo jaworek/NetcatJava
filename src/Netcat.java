@@ -5,12 +5,12 @@ public class Netcat extends NetcatGUI
     static String role;
     static String remoteAddr, localPort, remotePort;
 
-    Netcat(String title)
+    private Netcat(String title)
     {
         super(title);
     }
 
-    void run() throws IOException
+    private void run() throws IOException
     {
         if (role.equals("TCP Server"))
         {
@@ -31,7 +31,7 @@ public class Netcat extends NetcatGUI
         }
     }
 
-    void g()
+    private void g()
     {
         NetcatStartup p = new NetcatStartup("Netcat Connection");
 

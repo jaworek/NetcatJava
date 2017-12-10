@@ -11,19 +11,18 @@ class Udp
     DatagramSocket socket;
     InetAddress ip = null;
     int port;
-    ButtonHandler txButtonHandler;
-    String fromServer = "";
-    JButton sendButton = Netcat.sendButton;
-    JTextArea rxArea = Netcat.rxArea;
-    JTextField txArea = Netcat.txArea;
+    private String fromServer = "";
+    private JTextArea rxArea = Netcat.rxArea;
+    private JTextField txArea = Netcat.txArea;
 
     Udp()
     {
-        txButtonHandler = new ButtonHandler();
+        ButtonHandler txButtonHandler = new ButtonHandler();
+        JButton sendButton = Netcat.sendButton;
         sendButton.addActionListener(txButtonHandler);
     }
 
-    void tx() throws IOException
+    private void tx() throws IOException
     {
         byte[] buf;
 

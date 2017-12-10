@@ -7,14 +7,11 @@ import java.net.Socket;
 
 class TcpServer extends Tcp
 {
-    ServerSocket serverSocket;
-    Socket socket;
-
     TcpServer(String port) throws IOException
     {
         super();
-        serverSocket = new ServerSocket(Integer.parseInt(port));
-        socket = serverSocket.accept();
+        ServerSocket serverSocket = new ServerSocket(Integer.parseInt(port));
+        Socket socket = serverSocket.accept();
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
