@@ -29,6 +29,7 @@ class Udp
         String toServer;
 
         toServer = txArea.getText();
+        if (toServer.equals("")) return;
 
         buf = toServer.getBytes();
 

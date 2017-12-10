@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,6 +30,9 @@ class NetcatStartup extends NetcatStartupGUI
                     if (localPort.matches("\\d*"))
                     {
                         finished = true;
+                    } else
+                    {
+                        JOptionPane.showMessageDialog(container, "Please, provide correct port number.", "Invalid local port", JOptionPane.INFORMATION_MESSAGE);
                     }
                     break;
                 case "TCP Client":
@@ -36,6 +40,9 @@ class NetcatStartup extends NetcatStartupGUI
                     if (remotePort.matches("\\d*") && remoteAddr.matches("\\d*\\.\\d*\\.\\d*\\.\\d*"))
                     {
                         finished = true;
+                    } else
+                    {
+                        JOptionPane.showMessageDialog(container, "Please, provide correct port number or ip address.", "Invalid local port or ip address", JOptionPane.INFORMATION_MESSAGE);
                     }
                     break;
             }

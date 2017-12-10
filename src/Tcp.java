@@ -16,6 +16,7 @@ class Tcp
 
     private void tx() throws IOException
     {
+        if (txArea.getText().equals("")) return;
         out.println(txArea.getText());
         rxArea.setText(rxArea.getText() + "Me: " + txArea.getText() + System.lineSeparator());
         txArea.setText("");

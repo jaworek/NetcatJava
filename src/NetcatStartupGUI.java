@@ -9,7 +9,6 @@ class NetcatStartupGUI extends JFrame
     JComboBox netcatRole;
     JTextField remotePortTextField, remoteIPTextField, localPortTextField;
     Container container;
-    ListHandler lHandler;
     String role, remoteAddr, localPort, remotePort;
 
     @SuppressWarnings("unchecked")
@@ -22,11 +21,11 @@ class NetcatStartupGUI extends JFrame
         container = getContentPane();
         container.setLayout(new FlowLayout());
         netcatRole = new JComboBox(netcatRoleString);
-        remotePortTextField = new JTextField("1234", 43);
-        remoteIPTextField = new JTextField("127.0.0.1", 43);
-        localPortTextField = new JTextField("1234", 43);
+        remotePortTextField = new JTextField("1234",43);
+        remoteIPTextField = new JTextField("127.0.0.1",43);
+        localPortTextField = new JTextField("1234",43);
 
-        lHandler = new ListHandler();
+        ListHandler lHandler = new ListHandler();
         netcatRole.addActionListener(lHandler);
 
         startButton = new JButton("Start");
@@ -58,7 +57,8 @@ class NetcatStartupGUI extends JFrame
                 remotePortTextField.setBackground(Color.RED);
                 localPortTextField.setEditable(true);
                 localPortTextField.setBackground(Color.WHITE);
-            } else if (role.equals("TCP Client") || role.equals("UDP Client"))
+            }
+            if (role.equals("TCP Client") || role.equals("UDP Client"))
             {
                 remoteIPTextField.setEditable(true);
                 remoteIPTextField.setBackground(Color.WHITE);
