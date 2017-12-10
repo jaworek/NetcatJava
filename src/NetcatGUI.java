@@ -29,5 +29,9 @@ class NetcatGUI extends JFrame
         container.add(new JLabel("Send message:"));
         container.add(txArea);
         container.add(sendButton);
+
+        this.setSize(new Dimension(550, 240));
+        this.setResizable(false);
+        this.setVisible(true);
     }
 }

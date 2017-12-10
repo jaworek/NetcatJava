@@ -10,9 +10,7 @@ class NetcatStartupGUI extends JFrame
     JTextField remotePortTextField, remoteIPTextField, localPortTextField;
     Container container;
     ListHandler lHandler;
-    String role;
-    String remoteAddr;
-    String localPort, remotePort;
+    String role, remoteAddr, localPort, remotePort;
 
     @SuppressWarnings("unchecked")
     public NetcatStartupGUI(String title)
@@ -41,6 +39,10 @@ class NetcatStartupGUI extends JFrame
         container.add(new JLabel("Local Port:"));
         container.add(localPortTextField);
         container.add(startButton);
+
+        this.setSize(new Dimension(550, 250));
+        this.setResizable(false);
+        this.setVisible(true);
     }
 
     private class ListHandler implements ActionListener
