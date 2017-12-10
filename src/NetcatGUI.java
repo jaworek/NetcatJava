@@ -30,6 +30,5 @@ class NetcatGUI extends JFrame
 
         this.setSize(new Dimension(550, 240));
         this.setResizable(false);
-        this.setVisible(true);
     }
 }

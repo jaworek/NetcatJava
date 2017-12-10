@@ -50,7 +50,9 @@ public class Netcat extends NetcatGUI
         Netcat f = new Netcat("Netcat");
 
         f.g();
+
         f.setTitle(Netcat.role);
+        f.setVisible(true);
         f.run();
     }
 }

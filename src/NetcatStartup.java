@@ -17,10 +17,28 @@ class NetcatStartup extends NetcatStartupGUI
         public void actionPerformed(ActionEvent event)
         {
             role = (String) netcatRole.getSelectedItem();
+
             remoteAddr = remoteIPTextField.getText();
             remotePort = remotePortTextField.getText();
             localPort = localPortTextField.getText();
-            finished = true;
+
+            switch (role)
+            {
+                case "TCP Server":
+                case "UDP Server":
+                    if (localPort.matches("\\d*"))
+                    {
+                        finished = true;
+                    }
+                    break;
+                case "TCP Client":
+                case "UDP Client":
+                    if (remotePort.matches("\\d*") && remoteAddr.matches("\\d*\\.\\d*\\.\\d*\\.\\d*"))
+                    {
+                        finished = true;
+                    }
+                    break;
+            }
         }
     }
 
