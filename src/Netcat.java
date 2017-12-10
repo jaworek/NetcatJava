@@ -2,8 +2,8 @@ import java.io.*;
 
 public class Netcat extends NetcatGUI
 {
-    static String role;
-    static String remoteAddr, localPort, remotePort;
+    private static String role;
+    private static String remoteAddr, localPort, remotePort;
 
     private Netcat(String title)
     {
