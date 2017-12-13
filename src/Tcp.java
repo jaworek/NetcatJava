@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class Tcp
+abstract class Tcp
 {
     PrintWriter out;
     BufferedReader in;
@@ -14,7 +14,7 @@ class Tcp
     private JTextArea rxArea = Netcat.rxArea;
     private JTextField txArea = Netcat.txArea;
 
-    private void tx() throws IOException
+    void tx() throws IOException
     {
         if (txArea.getText().equals("")) return;
         out.println(txArea.getText());
@@ -31,6 +31,7 @@ class Tcp
                 tx();
             } catch (IOException e)
             {
+                System.out.println("Caught an exception");
             }
         }
     }

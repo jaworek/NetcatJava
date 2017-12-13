@@ -6,7 +6,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-class Udp
+abstract class Udp
 {
     DatagramSocket socket;
     InetAddress ip = null;
@@ -22,7 +22,7 @@ class Udp
         sendButton.addActionListener(txButtonHandler);
     }
 
-    private void tx() throws IOException
+    void tx() throws IOException
     {
         byte[] buf;
 
