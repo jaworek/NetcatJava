@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class NetcatStartupGUI extends JFrame
+abstract class NetcatStartupGUI extends JFrame
 {
     JButton startButton;
     JComboBox netcatRole;

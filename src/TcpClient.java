@@ -13,13 +13,9 @@ class TcpClient extends Tcp
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-        txButtonHandler = new ButtonHandler();
-        sendButton.addActionListener(txButtonHandler);
-
         rx();
 
         socket.close();
-
         System.exit(1);
     }
 }

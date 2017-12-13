@@ -1,7 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-class NetcatGUI extends JFrame
+abstract class NetcatGUI extends JFrame
 {
     public static JButton sendButton;
     public static JTextArea rxArea;

@@ -9,10 +9,15 @@ abstract class Tcp
 {
     PrintWriter out;
     BufferedReader in;
-    ButtonHandler txButtonHandler;
-    JButton sendButton = Netcat.sendButton;
     private JTextArea rxArea = Netcat.rxArea;
     private JTextField txArea = Netcat.txArea;
+
+    Tcp()
+    {
+        ButtonHandler txButtonHandler = new ButtonHandler();
+        JButton sendButton = Netcat.sendButton;
+        sendButton.addActionListener(txButtonHandler);
+    }
 
     void tx() throws IOException
     {
@@ -38,11 +43,10 @@ abstract class Tcp
 
     void rx() throws IOException
     {
-        String recievedMessage;
-        while ((recievedMessage = in.readLine()) != null)
+        String receivedMessage;
+        while ((receivedMessage = in.readLine()) != null)
         {
-            String existingText = rxArea.getText();
-            rxArea.setText(existingText + "Client: " + recievedMessage + System.lineSeparator());
+            rxArea.setText(rxArea.getText() + "Client: " + receivedMessage + System.lineSeparator());
         }
     }
 }
